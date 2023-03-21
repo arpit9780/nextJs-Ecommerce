@@ -21,7 +21,7 @@ const Health = () => {
 
     return (
         <>
-            <CustomCard data={data} />
+            <CustomCard data={data} person="user"/>
         </>
     )
 }

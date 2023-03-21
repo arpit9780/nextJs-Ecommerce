@@ -21,7 +21,7 @@ const Furniture   = () => {
 
     return (
         <>
-            <CustomCard data={data} />
+            <CustomCard data={data} person="user" />
         </>
     )
 }

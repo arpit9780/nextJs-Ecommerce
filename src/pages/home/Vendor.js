@@ -1,23 +1,5 @@
+import { vendors } from '@/constant'
 import React from 'react'
-import vendor1 from '../../assets/images/vendor-1.jpg'
-import vendor2 from '../../assets/images/vendor-2.jpg'
-import vendor3 from '../../assets/images/vendor-3.jpg'
-import vendor4 from '../../assets/images/vendor-4.jpg'
-import vendor5 from '../../assets/images/vendor-5.jpg'
-import vendor6 from '../../assets/images/vendor-6.jpg'
-import vendor7 from '../../assets/images/vendor-7.jpg'
-import vendor8 from '../../assets/images/vendor-8.jpg'
-
-const vendors = [
-    { image: vendor1.src },
-    { image: vendor2.src },
-    { image: vendor3.src },
-    { image: vendor4.src },
-    { image: vendor5.src },
-    { image: vendor6.src },
-    { image: vendor7.src },
-    { image: vendor8.src },
-]
 
 const Vendor = () => {
     return (

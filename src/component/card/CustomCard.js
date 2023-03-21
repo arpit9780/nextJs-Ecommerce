@@ -1,26 +1,36 @@
+import { appRoute } from '@/constant'
 import { addCart } from '@/redux/slicess/user/shopingSlice'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-const CustomCard = ({data}) => {
+const CustomCard = ({ data, person }) => {
     const dispatch = useDispatch()
-
-    const { role } = useSelector((state) => {
+    const router = useRouter()
+    
+    const { role,token } = useSelector((state) => {
         return {
             role: state?.RootReducer?.authSlice?.role,
+            token : state?.RootReducer?.authSlice?.Token
         }
     })
 
+    console.log(654125,role)
     const shoppingCart = (id) => {
-        if (role === "Welcome user..!!") {
+        if (token !== undefined && role === "Welcome user..!!") {
             const body = { "itemId": id, "quantity": 1 }
             dispatch(addCart(body))
         }
         else {
+            router.push(appRoute.SIGNIN)
             toast.error("your not login. Please login first")
         }
+    }
+
+    const handleUpdate = (id) => {
+        router.push(`/profile/shop/${id}`)
     }
 
     return (
@@ -32,10 +42,38 @@ const CustomCard = ({data}) => {
                             <div key={i} className="col-lg-3 col-md-4 col-sm-6 pb-1">
                                 <div className="product-item bg-light mb-4">
                                     <div className="product-img position-relative overflow-hidden">
-                                        <img className="img-fluid w-100" src={item.image} alt="" style={{ height: "220px", width: "auto", objectFit: "contain" }} />
+                                        <img className="img-fluid w-100"
+                                            
+                                            src={item.image} alt=""
+                                            style={{ height: "220px", width: "auto", objectFit: "contain" }} />
                                         <div className="product-action">
-                                        <button className="btn btn-outline-dark btn-square" onClick={() => shoppingCart(item._id)}><i className="fa fa-shopping-cart"></i></button>
-                                        <button className="btn btn-outline-dark btn-square" ><i className="far fa-heart"></i></button>
+                                            {
+                                                person === "user" ?
+                                                    <>
+                                                        <button
+                                                            className="btn btn-outline-dark btn-square"
+                                                            onClick={() => shoppingCart(item._id)}>
+                                                            <i className="fa fa-shopping-cart"></i>
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-dark btn-square" >
+                                                            <i className="far fa-heart"></i>
+                                                        </button>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <button
+                                                            className="btn btn-outline-dark btn-square"
+                                                            onClick={() => { dispatch(deleteProduct(item._id)) }} >
+                                                            <i className="fa fa-trash"></i>
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-dark btn-square"
+                                                            onClick={() => handleUpdate(item._id)} >
+                                                            <i className="fa fa-edit"></i>
+                                                        </button>
+                                                    </>
+                                            }
                                         </div>
                                     </div>
                                     <div className="text-center py-4">

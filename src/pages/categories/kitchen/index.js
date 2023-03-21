@@ -21,7 +21,7 @@ const Kitchen = () => {
 
     return (
         <>
-            <CustomCard data={data} />
+            <CustomCard data={data} person="user"/>
         </>
     )
 }

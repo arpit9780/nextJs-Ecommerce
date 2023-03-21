@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import Homes from './home'
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,17 +19,3 @@ export default function Home() {
     </>
   )
 }
-
-// const token;
-// if (typeof window !== 'undefined') {
-//   token = localStorage.getItem("authToken")
-// }
-
-// export async function getServerSideProps() {
-//   const instance = axios.create({
-//     baseURL: process.env.API_URL,
-//     header: {
-//       Authorization: token
-//     }
-//   });
-// }

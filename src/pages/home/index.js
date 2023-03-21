@@ -1,14 +1,14 @@
 import React from 'react'
 import Features from '../features'
 import Products from './AllProducts'
-import Carousel from './Carousel'
+import CarouselFile from './CarouselFile'
 import Vendor from './Vendor'
 
 const Home = () => {
 
   return (
     <>
-      <Carousel />
+      <CarouselFile />
       <Products />
       <Features />
       <Vendor />

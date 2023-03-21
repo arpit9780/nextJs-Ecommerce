@@ -2,16 +2,18 @@ import { appRoute } from '@/constant';
 import { registerUser } from '@/redux/slicess/commonSlice/authSlice';
 import { signupSchema } from '@/validation/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Backdrop, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Container } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { BarLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 const Signup = () => {
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const router = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -25,30 +27,27 @@ const Signup = () => {
             user: state?.RootReducer?.authSlice?.user
         }
     })
-    console.log("signup",status,error,user)
+    console.log("signup", status, error, user)
     useEffect(() => {
-        if (status == "Failed") {
-            if(error.status === 404)
-            {
-                toast.error("Not Found")
-            }
-            else{
-                toast.error(error.data.error)
-            }
-        }
-        else if (status == "Success") {
+        if (status == "SuccessRegister") {
             toast.success(user?.data?.message)
-                router.push(appRoute.SIGNIN)
+            router.push(appRoute.SIGNIN)
+            setLoading(false)
         }
-    }, [error,user])
+        else if (status == "FailedRegister") {
+            setLoading(false)
+        }
+    }, [status])
 
     const onSubmit = data => {
+        setLoading(true)
         dispatch(registerUser(data))
     }
 
     return (
         <>
-            <div className="container h-100">
+            {/* <div className="container h-100"> */}
+            <Container className="h-100" >
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col-lg-12 col-xl-11">
                         <div className="card text-black" style={{ borderRadius: "25px" }}>
@@ -126,9 +125,15 @@ const Signup = () => {
                                                 <Button
                                                     type='submit'
                                                     variant="contained"
-                                                    disabled={status === 'Pending' ? true : false}
+                                                    disabled={loading ? true : false}
                                                 >
-                                                    {status === 'Pending' ? <BarLoader color="#ffd706" /> : "Submit"}
+                                                    {loading ?
+                                                        <Backdrop
+                                                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                            open={loading}
+                                                        >
+                                                            <CircularProgress color="inherit" />
+                                                        </Backdrop> : "Submit"}
                                                 </Button> </div>
                                         </form>
                                     </div>
@@ -141,8 +146,8 @@ const Signup = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        
+            </Container>
+
         </>
     )
 }

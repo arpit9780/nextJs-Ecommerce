@@ -1,10 +1,13 @@
-import { logoutAuth } from '@/redux/slicess/commonSlice/authSlice'
+import { appRoute } from '@/constant'
+import { logoutAuth, searchProduct } from '@/redux/slicess/commonSlice/authSlice'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 const Appbar = () => {
+    const router = useRouter()
     const dispatch = useDispatch()
     const [search, setSearch] = useState()
     const { authToken, role } = useSelector((state) => {
@@ -20,7 +23,8 @@ const Appbar = () => {
         e.preventDefault()
         console.log(78, search)
         if (search) {
-            // dispatch(searchProduct(search))
+            dispatch(searchProduct(search))
+            router.push(appRoute.SEARCH)
         }
     }
     return (
@@ -32,10 +36,10 @@ const Appbar = () => {
 
                             <Link className="text-body mr-3" href="">About</Link>
                             <Link className="text-body mr-3" href="">Contact</Link>
-                            {role === "Welcome admin..!!" ?
-                                <Link className="text-body mr-3" href="/admin">Admin</Link>
+                            {authToken !== undefined && role === "Welcome admin..!!" ?
+                                <Link className="text-body mr-3" href={appRoute.ADMIN}>Profile</Link>
                                 :
-                                role === "Welcome user..!!" ?
+                                authToken !== undefined && role === "Welcome user..!!" ?
                                     <Link className="text-body mr-3" href="/user">User</Link>
                                     :
                                     null
@@ -49,12 +53,12 @@ const Appbar = () => {
                                 <button type="button" className="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                                 <div className="dropdown-menu dropdown-menu-right">
                                     {authToken ?
-                                        <Link className="dropdown-item" href='/' type="button" onClick={() => { dispatch(logoutAuth()) }}>
+                                        <Link className="dropdown-item" href={appRoute.SIGNIN} type="button" onClick={() => { dispatch(logoutAuth()) }}>
                                             Logout
                                         </Link> :
                                         <>
-                                            <Link className="dropdown-item" href='/signin' type="button">Sign in</Link>
-                                            <Link className="dropdown-item" href='/signup' type="button">Sign up</Link>
+                                            <Link className="dropdown-item" href={appRoute.SIGNIN} type="button">Sign in</Link>
+                                            <Link className="dropdown-item" href={appRoute.SIGNUP} type="button">Sign up</Link>
                                         </>
                                     }
                                 </div>

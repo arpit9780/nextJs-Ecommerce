@@ -14,7 +14,7 @@ const Categories = () => {
                                 <Link className="text-decoration-none" href={item.url}>
                                     <div className="cat-item d-flex align-items-center mb-4">
                                         <div className="overflow-hidden" style={{ width: "100px", height: "100px" }}>
-                                            <img className="img-fluid" src={item.img} alt="" />
+                                            <img className="img-fluid" src={item.img} alt="" height="100px" width="auto"/>
                                         </div>
                                         <div className="flex-fill pl-3">
                                             <h6>{item.name}</h6>

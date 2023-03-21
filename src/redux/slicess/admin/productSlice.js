@@ -94,8 +94,6 @@ export const deleteProduct = createAsyncThunk(
     }
 )
 
-
-
 export const ProductSlice = createSlice({
     name: "ProductSlice",
     initialState,
@@ -134,7 +132,6 @@ export const ProductSlice = createSlice({
                     // state.oneProduct = []
                     state.status = "Pending"
                 })
-
                 .addCase(getAdminProduct.fulfilled, (state, action) => {
                     state.status = "Success"
                     state.product = action.payload
@@ -170,6 +167,7 @@ export const ProductSlice = createSlice({
                     state.status = "Failed"
                     state.error = action.payload
                 })
+
                 .addCase(deleteProduct.pending, (state, action) => {
                     state.status = "Pending"
                     state.oneProduct = []

@@ -9,6 +9,25 @@ import food from "./assets/images/cat-6.jpg"
 import toy from "./assets/images/cat-7.jpg"
 import shoes from "./assets/images/product-4.jpg"
 import kitchenAppliance from "./assets/images/product-3.jpg"
+import vendor1 from './assets/images/vendor-1.jpg'
+import vendor2 from './assets/images/vendor-2.jpg'
+import vendor3 from './assets/images/vendor-3.jpg'
+import vendor4 from './assets/images/vendor-4.jpg'
+import vendor5 from './assets/images/vendor-5.jpg'
+import vendor6 from './assets/images/vendor-6.jpg'
+import vendor7 from './assets/images/vendor-7.jpg'
+import vendor8 from './assets/images/vendor-8.jpg'
+
+export const vendors = [
+    { image: vendor1.src },
+    { image: vendor2.src },
+    { image: vendor3.src },
+    { image: vendor4.src },
+    { image: vendor5.src },
+    { image: vendor6.src },
+    { image: vendor7.src },
+    { image: vendor8.src },
+]
 
 export const appRoute = {
 
@@ -17,17 +36,17 @@ export const appRoute = {
     FEATURES: "/features",
     HOME: "/",
     OFFERS: "/offers",
-    PRODUCTS: "/user/productDashboard",
     RECENT_PRODUCT: "/recent-product",
-    SHOP: "/admin/shop",
+    SHOP: "/profile/shop",
     SIGNIN: "/signin",
     SIGNUP: "/signup",
 
     //private
-    PRODUCT_CREATE: "/admin/shop/create",
-    PRODUCT_UPDATE: "/admin/shop/[id]",
+    PRODUCT_CREATE: "/profile/shop/create",
+    PRODUCT_UPDATE: "/profile/shop/[id]",
     SHOPPING_CARD: "/user/shopping-card",
-    ADMIN: "/admin",
+    ADMIN: "/profile",
+    ALL_USERS: "/profile/all-users",
     USER: "/user",
     MENS_WEAR: "/categories/men-wear",
     WOMEN_WEAR: "/categories/women-wear",
@@ -41,6 +60,7 @@ export const appRoute = {
     KITCHEN: "/categories/kitchen",
     TOYS: "/categories/toys",
     TV: "/categories/tv",
+    SEARCH : "/search"
 }
 
 

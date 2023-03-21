@@ -24,6 +24,8 @@ function (error) {
   }
   else if(error.response.status === 404) {
     toast.error( error.response.data.error || "Not found")
+  }else if(error.response.status === 400) {
+    toast.error( error.response.data.error )
   }
   return Promise.reject(error.data);
 });

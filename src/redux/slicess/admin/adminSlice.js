@@ -98,9 +98,6 @@ export const deleteAdminProfile = createAsyncThunk(
     }
 )
 
-
-
-
 const adminSlice = createSlice({
     name: "AdminSlice",
     initialState,
@@ -110,11 +107,11 @@ const adminSlice = createSlice({
             builder
                 .addCase(getAdminProfile.pending, (state) => {
                     state.status = "Pending"
+                    
                 })
                 .addCase(getAdminProfile.fulfilled, (state, action) => {
                     state.status = "Success"
                     state.admin = action.payload
-                  
                 })
                 .addCase(getAdminProfile.rejected, (state, action) => {
                     state.status = "Failed"
@@ -169,8 +166,21 @@ const adminSlice = createSlice({
                     state.error = action.payload
                 })
 
+                .addCase(unBlockUser.pending, (state) => {
+                    state.status = "Pending"
+                })
+                .addCase(unBlockUser.fulfilled, (state, action) => {
+                    state.status = "Success"
+                    state.userActions = action.payload
+                })
+                .addCase(unBlockUser.rejected, (state, action) => {
+                    state.status = "Failed"
+                    state.error = action.payload
+                })
+
                 .addCase(updateAdminProfile.pending, (state) => {
                     state.status = "Pending"
+                    state.adminActions = []
                 })
                 .addCase(updateAdminProfile.fulfilled, (state, action) => {
                     state.status = "Success"
@@ -183,6 +193,7 @@ const adminSlice = createSlice({
                 
                 .addCase(deleteAdminProfile.pending, (state) => {
                     state.status = "Pending"
+                    state.adminActions = []
                 })
                 .addCase(deleteAdminProfile.fulfilled, (state, action) => {
                     state.status = "Success"

@@ -18,25 +18,13 @@ export const Dailogs = ({ open, isField, isRemove, handleClose }) => {
   const [loading,setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
-  const { profile, massageSuccess, massageError } = useSelector((state) => {
+  const { profile } = useSelector((state) => {
     return {
       profile: state?.RootReducer?.adminSlice?.admin?.Admin?.[0],
-      massageSuccess: state?.RootReducer?.adminSlice?.adminActions,
-      massageError: state?.RootReducer?.adminSlice?.error,
     }
   })
-  console.log(8567,massageSuccess)
 
-  useEffect(() => {
-   if(massageSuccess?.data?.message) {
-    toast.success(massageSuccess?.data?.message)
-    setLoading(false)
-   }
-   else if(massageError?.error){
-     toast.error(massageError?.error)
-     setLoading(false)
-   }
-  },[massageSuccess])
+  
   useEffect(() => {
     setValue("email", profile?.email)
   }, [])

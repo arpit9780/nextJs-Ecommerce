@@ -3,10 +3,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
+    allCards:[],
     addToCard: [],
     cart:[],
     error: "",
     status: '',
+    addCWA: []
+
 }
 
 export const addCart = createAsyncThunk(
@@ -56,10 +59,16 @@ export const incrementCard = createAsyncThunk(
         }
     }
 )
+
+
 const ShoppingSlice = createSlice({
     name: "ShoppingSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        addItem(state, action) {
+            state.addCWA = action.payload
+        }
+    },
     extraReducers:
         (builder) => {
             builder
@@ -68,6 +77,7 @@ const ShoppingSlice = createSlice({
                 })
                 .addCase(addCart.fulfilled, (state, action) => {
                     state.status = "Success"
+                    state.addCWA = []
                     state.addToCard = action.payload
                 })
                 .addCase(addCart.rejected, (state, action) => {
@@ -76,11 +86,12 @@ const ShoppingSlice = createSlice({
                 })
 
                 .addCase(getToCard.pending, (state, action) => {
+                    state.addCWA = []
                     state.status = "Pending"
                 })
                 .addCase(getToCard.fulfilled, (state, action) => {
                     state.status = "Success"
-                    state.addToCard = action.payload
+                    state.allCards = action.payload
                 })
                 .addCase(getToCard.rejected, (state, action) => {
                     state.status = "Failed"
@@ -113,4 +124,5 @@ const ShoppingSlice = createSlice({
         }
 })
 
+export const { addItem } = ShoppingSlice.actions
 export default ShoppingSlice.reducer

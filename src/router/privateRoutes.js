@@ -9,9 +9,10 @@ const PrivateRoute = ({ children }) => {
     const router = useRouter()
     const [hydrated, setHydrated] = useState(false);
 
-    const { role } = useSelector((state) => {
+    const { role, token } = useSelector((state) => {
         return {
             role: state?.RootReducer?.authSlice?.role,
+            token : state?.RootReducer?.authSlice?.Token
         }
     })
 
@@ -27,10 +28,10 @@ const PrivateRoute = ({ children }) => {
     let unProtectedRoutes = [
         appRoute.FEATURES,
         appRoute.HOME,
-        appRoute.PRODUCTS,
         appRoute.OFFERS,
         appRoute.RECENT_PRODUCT,
-        
+        appRoute.SEARCH,
+
         appRoute.ADMIN,
         appRoute.SIGNIN,
         appRoute.SIGNUP,
@@ -54,18 +55,33 @@ const PrivateRoute = ({ children }) => {
         appRoute.CATEGORIES,
         appRoute.FEATURES,
         appRoute.HOME,
-        appRoute.PRODUCTS,
+        appRoute.SEARCH,
 
         appRoute.RECENT_PRODUCT,
         appRoute.OFFERS,
         appRoute.SHOPPING_CARD,
-        appRoute.USER
+        appRoute.USER,
+
+        appRoute.CATEGORIES,
+        appRoute.MENS_WEAR,
+        appRoute.KIDS_WEAR,
+        appRoute.WOMEN_WEAR,
+        appRoute.BOOKS,
+        appRoute.ELECTRONICS,
+        appRoute.FOOD,
+        appRoute.FOOTWEAR,
+        appRoute.FURNITURE,
+        appRoute.HEALTH,
+        appRoute.KITCHEN,
+        appRoute.TOYS,
+        appRoute.TV,
     ]
 
     let adminRoutes = [
-        appRoute.CATEGORIES,
         appRoute.FEATURES,
         appRoute.HOME,
+        appRoute.ALL_USERS,
+        appRoute.SEARCH,
 
         appRoute.SHOP,
         appRoute.PRODUCT_CREATE,
@@ -78,15 +94,13 @@ const PrivateRoute = ({ children }) => {
     const userPath = userRoutes.indexOf(router.pathname) === -1;
 
 
-    if (!role && pathIsUnProtected) {
+    if (token === undefined && !role && pathIsUnProtected) {
         router.push(appRoute.HOME);
-    } else if (role === "Welcome admin..!!" && adminPath) {
+    } else if (token !== undefined && role === "Welcome admin..!!" && adminPath) {
         router.push(appRoute.SHOP);
-    } else if (role ===  "Welcome user..!!" && userPath) {
-        router.push(appRoute.PRODUCTS)
+    } else if (token !== undefined && role === "Welcome user..!!" && userPath) {
+        router.push(appRoute.HOME)
     }
-
-
     return <Layout>
         {children}
     </Layout>

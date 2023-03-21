@@ -1,68 +1,70 @@
 import { authLogin } from '@/redux/slicess/commonSlice/authSlice';
-import { Button, TextField, Typography } from '@mui/material';
-import React, { useEffect } from 'react'
+import { Backdrop, Button, CircularProgress, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
-import { BarLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { loginSchema } from '@/validation/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
-import logo from '../../assets/logo/yuva-logo.png'
 import { useRouter } from 'next/router';
 import { appRoute } from '@/constant';
+import { Col, Container, Row } from 'react-bootstrap';
 
 
 const Signin = () => {
+    const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema)
     });
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { user, status, error } = useSelector((state) => {
+    const { user, status, token } = useSelector((state) => {
         return {
             status: state?.RootReducer?.authSlice?.status,
-            error: state?.RootReducer?.authSlice?.error,
             user: state?.RootReducer?.authSlice?.user,
+            token: state?.RootReducer?.authSlice?.Token
         }
     })
-    // useEffect(() => {
-    //     if (status == "Failed") {
-    //         if(error.status === 404)
-    //         {
-    //             toast.error("Not Found")
-    //         }
-    //         else{
-    //             toast.error(error.data.error)
-    //         }
-    //     }
-    //     else if (status == "Success") {
-    //         toast.success(user?.data?.success)
-    //             router.push(appRoute.SIGNIN)
-    //     }
-    // }, [error,user])
+    useEffect(() => {
+        if (token !== undefined && status == "SuccessLogin") {
+            toast.success(user?.data?.success)
+            router.push(appRoute.SHOPPING_CARD)
+            setLoading(false)
+        }else{
+            setTimeout(() => {
+                setLoading(false)
+            }, 2000);
+        }
+       
+    }, [status])
+
     const onSubmit = (data) => {
+        setLoading(true)
         dispatch(authLogin(data))
     };
     return (
         <>
-            <div className="h-100 gradient-form" style={{ backgroundColor: "#eee" }}>
-                <div className="container py-5 h-100">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col-xl-5">
-                            <div className="card rounded-3 text-black">
-                                <div className="row ">
-                                    <div className="col-lg-12">
-                                        <div className="card-body p-md-5 mx-md-4">
+            <div className="gradient-form" style={{ backgroundColor: "#eee", height: "100%" }}>
+                <Container style={{ height: "100%", padding: "10px 3rem" }}>
+                    <Row className="login-box">
+                        <Col xl={5}>
+                            <div className="card">
+                                <Row>
+                                     <Col lg={12}>
+                                        <div className="card-body ">
                                             <div className="text-center">
-                                                <img src={logo.src}
-                                                    style={{ width: "185px" }} alt="logo" />
+                                                {/* <img src={logo.src}
+                                                    style={{ width: "185px" }} alt="logo" /> */}
                                             </div>
                                             <form onSubmit={handleSubmit(onSubmit)}>
                                                 <h2 style={{ textAlign: "center" }}>Sign in</h2>
                                                 <h4 style={{ textAlign: "center" }}>Use your Account</h4>
 
-                                                <div className="form-outline mb-4">
+                                                <div
+                                                    className="form-outline"
+                                                    style={{ marginBottom: "25px" }}
+                                                >
                                                     <TextField
                                                         label="Email"
                                                         type="text"
@@ -76,7 +78,7 @@ const Signin = () => {
                                                     </Typography>
                                                 </div>
 
-                                                <div className="form-outline mb-4">
+                                                <div className="form-outline" style={{ marginBottom: "25px" }}>
                                                     <TextField
                                                         label="Password"
                                                         type='password'
@@ -90,31 +92,38 @@ const Signin = () => {
                                                     </Typography>
                                                 </div>
 
-                                                <div className="text-center pt-1 mb-5 pb-1">
+                                                <div className="submit-button" >
                                                     <Button
                                                         type='submit'
                                                         variant="contained"
                                                         fullWidth
-                                                        disabled={status === 'Pending' ? true : false}
+                                                        disabled={loading ? true : false}
                                                     >
-                                                        {status === 'Pending' ? <BarLoader color="#ffd706" /> : "Submit"}
+                                                        {loading ?
+                                                            <Backdrop
+                                                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                open={loading}
+                                                            >
+                                                                <CircularProgress color="inherit" />
+                                                            </Backdrop>
+                                                            : "Submit"
+                                                        }
                                                     </Button>
                                                 </div>
 
-                                                <div className="d-flex align-items-center justify-content-center pb-4">
-                                                    <p className="mb-0 me-2">Don't have an account?</p>
+                                                <div className="create-btn">
+                                                    <p style={{marginBottom:"0px"}}>Don't have an account?</p>
                                                     <button type="button" className="btn btn-outline-danger" onClick={() => { router.push(appRoute.SIGNUP) }}>Create new</button>
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
-                                </div>
+                                    </Col>
+                                </Row>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
-
         </>
     )
 }
