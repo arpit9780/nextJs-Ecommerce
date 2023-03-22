@@ -15,8 +15,6 @@ import { appRoute } from '@/constant'
 
 const Products = () => {
     const dataFetchedRef = useRef(false);
-
-    const [isloaded, setLoaded] = useState(false)
     const dispatch = useDispatch()
     const router = useRouter()
     const { product, role, token, addProduct } = useSelector((state) => {
@@ -30,22 +28,18 @@ const Products = () => {
 
     useEffect(() => {
         dispatch(getProduct())
-        setLoaded(true)
     }, [])
 
 
     const fetchData = () => {
-        console.log('Fetching data...');
         if (token) {
-            if (addProduct.length > 0) {
-                console.log(7854, isloaded, addProduct)
+            if (addProduct.length !== 0) {
                 dispatch(addCart(addProduct))
             }
         }
     }
     
     useEffect(() => {
-        console.log(741,dataFetchedRef)
         if (dataFetchedRef.current) return;
         dataFetchedRef.current = true;
         fetchData();
@@ -63,6 +57,7 @@ const Products = () => {
             const body = { "itemId": id, "quantity": 1 }
             dispatch(addItem(body))
             router.push(appRoute.SIGNIN)
+            dataFetchedRef.current = false;
         }
     }
 
@@ -84,8 +79,7 @@ const Products = () => {
                                 <Col xs lg="12" md="4" sm="6"
                                     style={{ height: "460px", paddingBottom: "16px" }}>
                                     <div className="product-item" key={i}>
-                                        <div className="product-img"
-                                            style={{ position: "relative", overflow: "hidden" }}>
+                                        <div className="product-img">
                                             <img
                                                 className="image-product"
                                                 src={item.image} alt="" />

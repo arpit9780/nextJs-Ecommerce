@@ -77,7 +77,6 @@ const ShoppingSlice = createSlice({
                 })
                 .addCase(addCart.fulfilled, (state, action) => {
                     state.status = "Success"
-                    state.addCWA = []
                     state.addToCard = action.payload
                 })
                 .addCase(addCart.rejected, (state, action) => {

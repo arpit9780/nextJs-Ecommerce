@@ -9,9 +9,10 @@ const index = () => {
           product : state?.RootReducer?.authSlice?.products?.data?.data
         }
       })
+      console.log("search",product)
     return (
     <div>
-        <CustomCard data={product } />
+        <CustomCard data={product} person="user"/>
     </div>
   )
 }

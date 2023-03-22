@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { appRoute } from '@/constant';
 import { Col, Container, Row } from 'react-bootstrap';
+import logo from '../../assets/logo/as-logo.jpg'
 
 
 const Signin = () => {
@@ -29,7 +30,7 @@ const Signin = () => {
     useEffect(() => {
         if (token !== undefined && status == "SuccessLogin") {
             toast.success(user?.data?.success)
-            router.push(appRoute.SHOPPING_CARD)
+            router.push(appRoute.HOME)
             setLoading(false)
         }else{
             setTimeout(() => {
@@ -54,8 +55,8 @@ const Signin = () => {
                                      <Col lg={12}>
                                         <div className="card-body ">
                                             <div className="text-center">
-                                                {/* <img src={logo.src}
-                                                    style={{ width: "185px" }} alt="logo" /> */}
+                                                <img src={logo.src}
+                                                    style={{ width: "85px" }} alt="logo" />
                                             </div>
                                             <form onSubmit={handleSubmit(onSubmit)}>
                                                 <h2 style={{ textAlign: "center" }}>Sign in</h2>

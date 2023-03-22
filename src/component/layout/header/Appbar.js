@@ -3,6 +3,7 @@ import { logoutAuth, searchProduct } from '@/redux/slicess/commonSlice/authSlice
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 
@@ -29,25 +30,25 @@ const Appbar = () => {
     }
     return (
         <>
-            <div className="container-fluid">
-                <div className="row bg-secondary py-1 px-xl-5">
-                    <div className="col-lg-6 d-none d-lg-block">
-                        <div className="d-inline-flex align-items-center h-100">
-
-                            <Link className="text-body mr-3" href="">About</Link>
-                            <Link className="text-body mr-3" href="">Contact</Link>
+            <Container fluid>    
+                <Row className="appbar-row">
+                    <Col lg={6} style={{display:"block"}}>
+                       <div className="appbar-ele"> 
+                            <Link className="appbar-link" href="">About</Link>
+                            <Link className="appbar-link" href="">Contact</Link>
                             {authToken !== undefined && role === "Welcome admin..!!" ?
-                                <Link className="text-body mr-3" href={appRoute.ADMIN}>Profile</Link>
+                                <Link className="appbar-link" href={appRoute.ADMIN}>Profile</Link>
                                 :
                                 authToken !== undefined && role === "Welcome user..!!" ?
-                                    <Link className="text-body mr-3" href="/user">User</Link>
+                                    <Link className="appbar-link" href="/user">User</Link>
                                     :
                                     null
                             }
-                            <Link className="text-body mr-3" href="">FAQs</Link>
+                            <Link className="appbar-link" href="">FAQs</Link>
                         </div>
-                    </div>
-                    <div className="col-lg-6 text-center text-lg-right">
+                    </Col>
+                    {/* <div className="col-lg-6 text-center text-lg-right"> */}
+                    <Col lg={6} className="text-center text-lg-right">
                         <div className="d-inline-flex align-items-center">
                             <div className="btn-group">
                                 <button type="button" className="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
@@ -91,8 +92,8 @@ const Appbar = () => {
                                 <span className="badge text-dark border border-dark rounded-circle" style={{ paddingBottom: "2px" }}>0</span>
                             </Link>
                         </div>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 <div className="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                     <div className="col-lg-4">
                         <Link href="" className="text-decoration-none">
@@ -118,7 +119,7 @@ const Appbar = () => {
                         <h5 className="m-0">+012 345 6789</h5>
                     </div>
                 </div>
-            </div>
+            </Container>
         </>
     )
 }

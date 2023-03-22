@@ -10164,6 +10164,11 @@ h6 {
   transition: 0.3s 0.15s;
 }
 
+.product-img {
+  position: relative;
+   overflow: hidden;
+}
+
 .product-item .product-img img {
   /* position: relative;
   overflow: hidden; */
@@ -10312,9 +10317,31 @@ h6 {
 }
 
 .create-btn {
-  /* d-flex align-items-center justify-content-center pb-4 */
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 64px;
 }
+
+.features-item {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.appbar-row {
+  background-color: #f5f5f5;
+  padding: 0.25rem 3rem;
+}
+
+.appbar-ele {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+
+.appbar-link {
+  color: #6c757d;
+  margin-right: 1rem;
+}
+
